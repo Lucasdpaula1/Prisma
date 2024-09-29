@@ -1,0 +1,28 @@
+{
+  "name": "prisima-orm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./dist/server.js",
+    "build": "rimraf ./dist && tsc",
+    "preServer": "npm run build",
+    "server": " concurrently \"nodemon ./dist/server.js\"   \"tsc -w\" "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "concurrently": "^9.0.1",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7",
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.3",
+    "prisma": "^5.20.0"
+  }
+}
