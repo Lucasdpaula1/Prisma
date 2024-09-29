@@ -10,17 +10,36 @@ datasource db {
 }
 model User {
   id Int @id @default(autoincrement())
-  name String
-  email String
+  name String @db.Char(50)
+  email String @unique @db.Char(50)
+  password String
+  post post[]
+  created_at DateTime @default(now())
+  end End[]
   @@map("users")
   
 }
-model Fornecedores {
+model post {
   id Int @id @default(autoincrement())
-   name String
-  email String
-  @@map("fornecedores")
+  description String
+  text String 
+  userId Int 
+  created_at DateTime @default(now())
+  user User @relation(fields: [userId],references: [id])
+  @@map("posts")
 
 
 
+}
+model End {
+  id Int @id @default(autoincrement())
+  bairro String
+  cidade String
+  cep String
+  complemento String?
+  created_at DateTime @default(now())
+  UserId Int
+  end User @relation(fields: [UserId],references: [id])
+
+  @@map("address")
 }
