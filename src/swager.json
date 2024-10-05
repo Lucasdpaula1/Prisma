@@ -1,0 +1,95 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    { "url": "http://localhost:8000", "description": "servidor de manipulação" }
+  ],
+  "info": {
+    "version": "1.0.0",
+    "title": "Api academic",
+    "contact": {
+      "name": "lucas",
+      "url": "lucassilvadpaula@gmail.com"
+    },
+    "description": "api focada no relacionamento"
+  },
+  "paths": {
+    "/user/showUser": {
+      "get": {
+        "summary": "listagem de usuário",
+        "description": "uma rota que consegue trazer todos os usários ou todos os posts relacionaos a eles dependendo do parametro ser true or false, true se quiser trazer todos os posts relacionados a cada usuário cadastrao internamente no banco de dados e false para trazer somente a listagem dos usuário",
+        "tags": ["usuário"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "posts",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all users"
+          },
+          "500": {
+            "description": "erro interno de servidor"
+          }
+        }
+      }
+    },
+    "/user/CreateUser": {
+      "post": {
+        "tags": ["usuário"],
+        "description": "cadastro de usuário",
+        "summary": "registro interno do usuário  no banco de dados",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "usuário cadastrado com sucesso" },
+          "403": { "description": "usuário ja possui cadastro no sistema" },
+          "400": { "description": "campos inválidos" },
+          "500": { "description": "erro interno do servidor" }
+        }
+      }
+    },
+    "/user/delete/{id}": {
+      "delete": {
+        "tags": ["usuário"],
+        "parameters": [
+          {
+            "example": "1",
+            "name": "id",
+            "in": "path",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "usuário deletado com sucesso" },
+          "404": { "description": "usuário não encontrado" },
+          "500": { "description": "erro interno de servidor" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      }
+    }
+  }
+}
